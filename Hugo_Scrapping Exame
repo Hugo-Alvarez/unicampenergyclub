@@ -1,0 +1,20 @@
+from bs4 import BeautifulSoup
+import requests
+
+source = requests.get('https://exame.com/noticias-sobre/energia-renovavel/').text
+soup = BeautifulSoup(source, 'lxml')
+for article in soup.find_all('span', class_='list-item-title'):
+	headline = article.a.text
+	link = article.find ('a', href=True)
+	link2 = link ['href']
+	fonte = requests.get(link2).text
+	soup2 = BeautifulSoup(fonte, 'lxml')
+	subtitulo = soup2.find ('h2', class_='article-subtitle')
+	subtitulo2 = subtitulo.text
+	print ('$Título$')
+	print (headline)
+	print ('Resumo')
+	print (subtitulo2)
+	print ('Link')
+	print(link['href'])
+	print ( )
